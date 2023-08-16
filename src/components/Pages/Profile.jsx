@@ -1,13 +1,14 @@
-import React, { useRef } from 'react'
+import React, { useRef, useContext } from 'react';
 import axios from 'axios';
 import Header from '../Header';
-import { useContext } from 'react';
 import { GlobalContext } from '../Context/globalContext';
 
 const Profile = () => {
     const nameRef = useRef(null);
     const imageRef = useRef(null);
     const { profileHandler } = useContext(GlobalContext);
+    const { name: currentName } = JSON.parse(localStorage.getItem('name')) || ''; // Get current name from localStorage
+
     const formSubmitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -16,25 +17,31 @@ const Profile = () => {
                 image: imageRef.current.value
             }
             const token = JSON.parse(localStorage.getItem('token'));
-            await axios.post('http://localhost:3002/users/profile/complete', obj, { headers: { "Authorization": token } });
-            localStorage.setItem('name', JSON.stringify(nameRef.current.value));
+            
+            if (currentName !== obj.name) {
+                // Only update the name if it's changed
+                await axios.post('http://localhost:3002/users/profile/complete', obj, { headers: { "Authorization": token } });
+                localStorage.setItem('name', JSON.stringify(obj.name));
+            }
+            
             profileHandler();
             window.location.href = '/main';
         } catch (error) {
             console.log(error);
         }
     }
+
     return (
         <div>
-          <Header/>
-            <div className="flex items-center justify-center p-12 ">
+            <Header />
+            <div className="flex items-center justify-center p-12">
                 <div className="mx-auto w-full max-w-[550px] bg-white border border-black rounded-md">
                     <form className="py-6 px-9" onSubmit={formSubmitHandler} method="POST">
                         <div className="mb-5">
                             <label htmlFor="email" className="mb-3 block text-base font-semibold text-[#07074D] ">
                                 Enter Your Name:
                             </label>
-                            <input type="text" placeholder="Sponge Bob" className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ref={nameRef} required />
+                            <input type="text" placeholder="Sponge Bob" className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ref={nameRef} defaultValue={currentName} required />
                         </div>
                         <div className="mb-6 pt-4">
                             <label className="mb-5 block text-xl font-semibold text-[#07074D]">
@@ -56,8 +63,6 @@ const Profile = () => {
                                     </div>
                                 </label>
                             </div>
-
-
                         </div>
                         <div>
                             <button className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
@@ -68,8 +73,7 @@ const Profile = () => {
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
 
-export default Profile
+export default Profile;
