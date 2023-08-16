@@ -20,7 +20,7 @@ const Auth = () => {
             if (login) {
                 console.log('login being called')
                 setSendingReq(true);
-                const response = await axios.post(`http://localhost:3000/users/login`, obj);
+                const response = await axios.post(`https://crudcrud.com/api/8a1ad90105304bda999a85bd3d2a8b9a/users`, obj);
                 setSendingReq(false);
                 setAlertSeverity('success');
                 console.log(response)
@@ -33,7 +33,7 @@ const Auth = () => {
             else {
                 console.log('signup being called');
                 setSendingReq(true);
-                const response = await axios.post(`https://crudcrud.com/api/8a1ad90105304bda999a85bd3d2a8b9a/users/signup`, obj);
+                const response = await axios.post(`https://crudcrud.com/api/8a1ad90105304bda999a85bd3d2a8b9a/users`, obj);
                 setAlertSeverity('success');
                 setAlertMsg(response.data.msg);
                 setSendingReq(false);
