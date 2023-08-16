@@ -10,7 +10,7 @@ const Profile = () => {
             try {
                
                 const token = JSON.parse(localStorage.getItem('token'));
-                const response = await axios.get('http://localhost:3006/users/profile/getProfile',{ headers: { "Authorization": token } });
+                const response = await axios.get('https://crudcrud.com/api/8a1ad90105304bda999a85bd3d2a8b9a/users',{ headers: { "Authorization": token } });
               
                 nameRef.current.value = response.data.data.name;
 
@@ -35,7 +35,7 @@ const Profile = () => {
                 image: imageRef.current.value
             }
             const token = JSON.parse(localStorage.getItem('token'));
-            await axios.post('http://localhost:3006/users/profile/complete', obj, { headers: { "Authorization": token } });
+            await axios.post('https://crudcrud.com/api/8a1ad90105304bda999a85bd3d2a8b9a/users', obj, { headers: { "Authorization": token } });
            
           
         } catch (error) {
