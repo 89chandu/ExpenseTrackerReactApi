@@ -14,7 +14,7 @@ const ForgotPassword = () => {
             }
 
 
-            const response = await axios.post('http://localhost:3006/users/forgotPassword', obj);
+            const response = await axios.post('https://expensetracker-dc91c-default-rtdb.firebaseio.com/users.json', obj);
             console.log(response);
             emailRef.current.value = "";
             setSeverity('success');
