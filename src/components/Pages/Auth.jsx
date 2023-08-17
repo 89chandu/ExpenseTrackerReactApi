@@ -5,9 +5,6 @@ import { NavLink } from 'react-router-dom'
 
 
 
-
-
-
 const Auth = () => {
     const [login, setLogin] = useState(false)
     const [sendingReq, setSendingReq] = useState(false);
@@ -24,7 +21,7 @@ const Auth = () => {
             if (login) {
                 console.log('login being called')
                 setSendingReq(true);
-                const response = await axios.post(`https://expensetracker-dc91c-default-rtdb.firebaseio.com/users.json`, obj);
+                const response = await axios.post(`http://localhost:3006/users/login`, obj);
                 setSendingReq(false);
                 setAlertSeverity('success');
                 console.log(response)
@@ -36,7 +33,7 @@ const Auth = () => {
             else {
                 console.log('signup being called');
                 setSendingReq(true);
-                const response = await axios.post(`https://expensetracker-dc91c-default-rtdb.firebaseio.com/users.json`, obj);
+                const response = await axios.post(`http://localhost:3006/users/signup`, obj);
                 setAlertSeverity('success');
                 setAlertMsg(response.data.msg);
                 setSendingReq(false);
@@ -64,10 +61,9 @@ const Auth = () => {
             password: passwordRef.current.value
         }
         if (login) LoginObj = {
-            // email: emailRef.current.value,
-            // password: passwordRef.current.value
-            email: "chandubopche@gmail.com",
-            password: "aman"
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+           
         }
         passwordRef.current.value = emailRef.current.value = "";
 
@@ -87,7 +83,7 @@ const Auth = () => {
                         </div>
                         <div className="flex flex-col py-3">
                             <label >Password</label>
-                            <input ref={passwordRef} className=" text-center border-b-4 p-2 border-gray-400" type="string"  ></input>
+                            <input ref={passwordRef} className=" text-center border-b-4 p-2 border-gray-400" type="password"  ></input>
                         </div>
                         {!sendingReq && <button className="bg-purple-700 rounded-md focus:bg-purple-950 duration-700 text-white text-2xl p-2 text-center" >{login ? 'login' : 'signUp '}</button>}
                         {sendingReq && <button className="bg-purple-700 rounded-md hover:bg-purple-600 duration-700 text-white text-2xl p-2 text-center">sending Req</button>}
