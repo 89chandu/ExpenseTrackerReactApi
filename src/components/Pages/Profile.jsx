@@ -10,7 +10,7 @@ const Profile = () => {
             try {
                
                 const token = JSON.parse(localStorage.getItem('token'));
-                const response = await axios.get('https://expensetracker-dc91c-default-rtdb.firebaseio.com/users.json',{ headers: { "Authorization": token } });
+                const response = await axios.get('http://localhost:3000/users/profile/getProfile',{ headers: { "Authorization": token } });
               
                 nameRef.current.value = response.data.data.name;
 
@@ -35,7 +35,7 @@ const Profile = () => {
                 image: imageRef.current.value
             }
             const token = JSON.parse(localStorage.getItem('token'));
-            await axios.post('https://expensetracker-dc91c-default-rtdb.firebaseio.com/expenses.json/users.json', obj, { headers: { "Authorization": token } });
+            await axios.post('http://localhost:3000/users/profile/complete', obj, { headers: { "Authorization": token } });
            
           
         } catch (error) {

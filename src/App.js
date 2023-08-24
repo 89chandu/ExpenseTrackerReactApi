@@ -4,7 +4,7 @@ import Main from "./components/Pages/Main";
 import Profile from "./components/Pages/Profile";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import UpdatePassword from "./components/Pages/UpdatePassword";
-import { GlobalContextProvider } from "./components/Context/globalContext";
+import { GlobalContextProvider } from "./components/Context/gobalContext";
 function App() {
 	return (
 		<BrowserRouter>
@@ -20,4 +20,5 @@ function App() {
 		</BrowserRouter>
 	);
 }
+
 export default App;
